@@ -8,20 +8,20 @@ function search(event) {
   // Stop the form from changing the page.
   event.preventDefault();
 
-  // delete this once we're convinced this works.
-  console.log("user pressed search button (delete me)");
-
   // Get the users search input and save it in a variable.
   // Use the input placeholder value (like "kittens") as a default value.
   var userQuery = undefined;
 
-  // Use jQuery's AJAX function to perform the network request to reddit.
-  // URL: 'https://www.reddit.com/search.json'
-  // METHOD: GET
-  // parameters: {q: userQuery}
+  console.log("searching for:", userQuery);
 
-  // You must choose how to process the data that returns from the AJAX request
-  // and figure out how to display it on the page.
+  $.get('https://www.reddit.com/search.json', {
+    q: 'kittens'
+  }).done(function(response) {
+    console.log(response);
+    
+    // You must choose how to process the data that returns from the AJAX request
+    // and figure out how to display it on the page from here on out.
+  });
 }
 
 // Clear previous search results.
