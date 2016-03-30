@@ -1,7 +1,9 @@
+// Set up the page when it loads.
 $(function() {
+  // Hide the loading indicator.
   $("#loading").hide();
+  // Attach our form submission to the search funciton.
   $("#search-form").on('submit', search);
-  $("#clear").on('click', clearSearchResults);
 });
 
 function search(event) {
