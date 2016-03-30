@@ -8,6 +8,9 @@ function search(event) {
   // Stop the form from changing the page.
   event.preventDefault();
 
+  // delete this once we're convinced this works.
+  console.log("user pressed search button (delete me)");
+
   // Get the users search input and save it in a variable.
   // Use the input placeholder value (like "kittens") as a default value.
   var userQuery = undefined;
