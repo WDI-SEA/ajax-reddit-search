@@ -1,8 +1,6 @@
 // Set up the page when it loads.
 $(function() {
-  // Hide the loading indicator.
-  $("#loading").hide();
-  // Attach our form submission to the search funciton.
+  // attach the form submission to the search function
   $("#search-form").on('submit', search);
 });
 
@@ -10,53 +8,37 @@ function search(event) {
   // Stop the form from changing the page.
   event.preventDefault();
 
-  // Gather the user input from the search box.
-  // Get the text the user entered in the search box.
-  // If there's no text in there then default to useing the placeholder.
-  var input = $("#query");
-  var query = input.val() || input.attr('placeholder');
+  // Get the users search input and save it in a variable.
+  // Use the input placeholder value (like "kittens") as a default value.
+  var userQuery = undefined;
 
-  // manually display a loading message
-  $("#loading").show();
+  // Use jQuery's AJAX function to perform the network request to reddit.
+  // URL: 'https://www.reddit.com/search.json'
+  // METHOD: GET
+  // parameters: {q: userQuery}
 
-  // Initiate the AJAX request
-  $.get('https://www.reddit.com/search.json', {
-    q: query
-  }).done(function(response) {
-    // Clear the search results once new results come in.
-    clearSearchResults();
-
-    // convert the response to a list of result objects
-    var posts = response.data.children;
-    posts.map(function(post) {
-      return post.data;
-    }).forEach(addSearchResult);
-  }).always(function() {
-    // After the AJAX is finished remove the loading message.
-    $("#loading").hide();
-  });
+  // You must choose how to process the data that returns from the AJAX request
+  // and figure out how to display it on the page.
 }
 
+// Clear previous search results.
 function clearSearchResults() {
   $("#results").html("");
 }
 
-function addSearchResult(post) {
-  // create a div to contain the link
-  var div = document.createElement("div");
+// Adds a single result object to the page.
+function addSearchResult(result) {
+  // Create a list item to contain the search result link
+  var li = document.createElement("li");
 
-  var span = document.createElement("span");
-  span.textContent = "(" + post.ups + " up / " + post.downs + " down)";
-
-  // create the link
+  // create an anchor tag
   var link = document.createElement("a");
-  link.href = post.url;
-  link.textContent = post.title;
+  link.href = "#"; // reset the value of the the href
+  link.textContent = ""; // set the value of the text in the link
 
-  // add the span text and link to the div
-  $(div).append(span);
-  $(div).append(link);
+  // put the link inside the list item.
+  $(li).append(link);
 
-  // add the div to the search results area
-  $("#results").append(div);
+  // add the list item to the list of search results
+  $("#results").append(li);
 }
