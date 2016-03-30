@@ -8,19 +8,25 @@ function search(event) {
   // Stop the form from changing the page.
   event.preventDefault();
 
+  clearSearchResults();
+
   // Get the users search input and save it in a variable.
   // Use the input placeholder value (like "kittens") as a default value.
-  var userQuery = undefined;
+  var input = $("#query");
+  var userQuery = input.val() || input.attr("placeholder");
 
   console.log("searching for:", userQuery);
 
   $.get('https://www.reddit.com/search.json', {
-    q: 'kittens'
+    q: userQuery
   }).done(function(response) {
     console.log(response);
-    
-    // You must choose how to process the data that returns from the AJAX request
-    // and figure out how to display it on the page from here on out.
+
+    var results = response.data.children;
+    for (var i = 0; i < results.length; i++) {
+    	var result = results[i].data;
+    	addSearchResult(result);
+    }
   });
 }
 
@@ -36,8 +42,8 @@ function addSearchResult(result) {
 
   // create an anchor tag
   var link = document.createElement("a");
-  link.href = "#"; // reset the value of the the href
-  link.textContent = ""; // set the value of the text in the link
+  link.href = result.url; // reset the value of the the href
+  link.textContent = result.title; // set the value of the text in the link
 
   // put the link inside the list item.
   $(li).append(link);
