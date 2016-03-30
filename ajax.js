@@ -12,7 +12,7 @@ function search(event) {
   // Get the text the user entered in the search box.
   // If there's no text in there then default to useing the placeholder.
   var input = $("#query");
-  var query = input.attr('placeholder') || input.val();
+  var query = input.val() || input.attr('placeholder');
 
   // manually display a loading message
   $("#loading").show();
